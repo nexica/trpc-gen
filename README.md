@@ -109,3 +109,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Author
 
 Jamie Fairweather
+
+## All contributors
+
+<a href="https://github.com/nexica/trpc-gen/graphs/contributors">
+  <p align="center">
+    <img width="720" height="50" src="https://contrib.rocks/image?repo=nexica/trpc-gen" alt="A table of avatars from the project's contributors" />
+  </p>
+</a>
