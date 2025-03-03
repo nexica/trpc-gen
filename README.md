@@ -1,22 +1,22 @@
-# @nexa/trpc-gen
+# @nexica/trpc-gen
 
-A custom Prisma generator for automatically creating NestJS TRPC routers for the Nexa-Stack.
+A custom Prisma generator for automatically creating NestJS TRPC routers for the Nexica-Stack.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Overview
 
-`@nexa/trpc-gen` is a Prisma generator that automatically creates NestJS TRPC routers, services, repositories, and modules for each model in your Prisma schema. This tool is specifically designed to work seamlessly with the [Nexa-Stack](https://github.com/link-to-nexa-stack) architecture.
+`@nexica/trpc-gen` is a Prisma generator that automatically creates NestJS TRPC routers, services, repositories, and modules for each model in your Prisma schema. This tool is specifically designed to work seamlessly with the [Nexica-Stack](https://github.com/link-to-nexica-stack) architecture.
 
-## Nexa-Stack Packages
+## Nexica-Stack Packages
 
-The Nexa-Stack consists of the following packages:
+The Nexica-Stack consists of the following packages:
 
-1. `@nexa/trpc-gen` - Prisma generator for NestJS TRPC routers (this package)
-2. `@nexa/nestjs-trpc` - NestJS integration for tRPC with custom decorators
-3. `@nexa/zod-gen` - Prisma generator for Zod validation schemas
-4. `@nexa/cli` - CLI tool for creating and managing Nexa-Stack projects
-5. `@nexa/client` - Frontend utilities for integrating with Nexa-Stack backends
+1. `@nexica/trpc-gen` - Prisma generator for NestJS TRPC routers (this package)
+2. `@nexica/nestjs-trpc` - NestJS integration for tRPC with custom decorators
+3. `@nexica/zod-gen` - Prisma generator for Zod validation schemas
+4. `@nexica/cli` - CLI tool for creating and managing Nexica-Stack projects
+5. `@nexica/client` - Frontend utilities for integrating with Nexica-Stack backends
 
 ## Features
 
@@ -30,13 +30,13 @@ The Nexa-Stack consists of the following packages:
 
 ```bash
 # Using npm
-npm install @nexa/trpc-gen --save-dev
+npm install @nexica/trpc-gen --save-dev
 
 # Using yarn
-yarn add @nexa/trpc-gen --dev
+yarn add @nexica/trpc-gen --dev
 
 # Using pnpm
-pnpm add @nexa/trpc-gen -D
+pnpm add @nexica/trpc-gen -D
 ```
 
 ## Usage
@@ -45,7 +45,7 @@ Add the generator to your `schema.prisma` file:
 
 ```prisma
 generator trpcRouter {
-  provider = "@nexa/trpc-gen"
+  provider = "@nexica/trpc-gen"
   output   = "./src/trpc/routers" // Optional: defaults to src/modules
 }
 ```
@@ -90,11 +90,11 @@ model User {
 }
 ```
 
-`@nexa/trpc-gen` will generate a full TRPC router with typed endpoints for creating, reading, updating, and deleting User records.
+`@nexica/trpc-gen` will generate a full TRPC router with typed endpoints for creating, reading, updating, and deleting User records.
 
-## Integration with Nexa-Stack
+## Integration with Nexica-Stack
 
-This generator is designed to work as part of the [Nexa-Stack](https://github.com/link-to-nexa-stack) ecosystem. It expects a specific project structure and relies on other components from the Nexa-Stack, such as:
+This generator is designed to work as part of the [Nexica-Stack](https://github.com/link-to-nexica-stack) ecosystem. It expects a specific project structure and relies on other components from the Nexica-Stack, such as:
 
 - (Todo)
 

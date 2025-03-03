@@ -1,10 +1,10 @@
 {
-    "name": "@nexa/trpc-gen",
+    "name": "@nexica/trpc-gen",
     "version": "0.0.1",
     "description": "Custom Prisma generator for NestJS TRPC routers",
     "main": "dist/index.js",
     "bin": {
-        "@nexa/trpc-gen": "dist/index.js"
+        "@nexica/trpc-gen": "dist/index.js"
     },
     "types": "dist/index.d.ts",
     "keywords": [
