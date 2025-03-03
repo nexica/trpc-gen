@@ -1,0 +1,42 @@
+{
+    "name": "@nexa/trpc-router-gen",
+    "version": "0.0.1",
+    "description": "Custom Prisma generator for NestJS TRPC routers",
+    "main": "dist/index.js",
+    "bin": {
+        "@nexa/trpc-router-gen": "dist/index.js"
+    },
+    "types": "dist/index.d.ts",
+    "keywords": [
+        "prisma",
+        "generator",
+        "nestjs",
+        "trpc",
+        "router"
+    ],
+    "author": "Jamie Fairweather",
+    "license": "MIT",
+    "scripts": {
+        "prepare": "husky",
+        "lint": "eslint . **/*.ts --fix",
+        "format": "prettier --write .",
+        "build": "rimraf dist && pnpm lint && pnpm format && tsc",
+        "pre-commit": "pnpm lint && pnpm format"
+    },
+    "dependencies": {
+        "@prisma/generator-helper": "^6.4.1"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^19.7.1",
+        "@commitlint/config-conventional": "^19.7.1",
+        "@eslint/js": "^9.21.0",
+        "@types/node": "^22.13.8",
+        "eslint-config-prettier": "^10.0.2",
+        "eslint-plugin-prettier": "^5.2.3",
+        "globals": "^16.0.0",
+        "husky": "^9.1.7",
+        "rimraf": "^6.0.1",
+        "typescript": "^5.8.2",
+        "typescript-eslint": "^8.25.0"
+    }
+}
