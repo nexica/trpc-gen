@@ -1,12 +1,17 @@
 {
-    "semanticCommits": true,
+    "semanticCommits": "enabled",
     "labels": ["dependencies"],
     "packageRules": [
         {
-            "matchUpdateTypes": ["patch", "pin", "pinDigest", "digest", "lockFileMaintenance"],
+            "matchUpdateTypes": [
+                "patch",
+                "pin",
+                "pinDigest",
+                "digest",
+                "lockFileMaintenance"
+            ],
             "automerge": true
         }
     ],
-    "extends": ["config:base"]
+    "extends": ["config:recommended"]
 }
-
