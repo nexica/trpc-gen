@@ -5,37 +5,42 @@ import * as fs from 'fs'
 import { generateRouterFile } from './templates/router.template'
 import { generateServiceFile } from './templates/service.template'
 import { generateRepoFile } from './templates/repo.template'
-
-function generateModuleFile(model: DMMF.Model, outputPath: string) {
-    const content = `import { Module } from '@nestjs/common'
-import { ${model.name}Router } from './${model.name.toLowerCase()}.router'
-import { ${model.name}Service } from './${model.name.toLowerCase()}.service'
-import { ${model.name}Repo } from './${model.name.toLowerCase()}.repo'
-
-@Module({
-    providers: [${model.name}Router, ${model.name}Service, ${model.name}Repo],
-})
-export class ${model.name}Module {}`
-
-    const filePath = path.join(outputPath, `${model.name.toLowerCase()}.module.ts`)
-    if (!fs.existsSync(filePath)) {
-        fs.writeFileSync(filePath, content)
-    }
-}
+import { generateModuleFile } from './templates/module.template'
 
 function updateAppModule(model: DMMF.Model, baseOutputDir: string) {
-    const srcDir = path.resolve(baseOutputDir, '../..')
-    const appModulePath = path.join(srcDir, 'app.module.ts')
+    const srcDir = path.resolve(baseOutputDir)
 
-    if (!fs.existsSync(appModulePath)) {
-        console.log(`[Generator] app.module.ts not found at ${appModulePath}`)
+    // Recursively search for trpc.module.ts by going up directories
+    function findTrpcModule(startDir: string, maxDepth = 10): string | null {
+        if (maxDepth <= 0) return null
+
+        const trpcModulePath = path.join(startDir, 'trpc.module.ts')
+
+        if (fs.existsSync(trpcModulePath)) {
+            return trpcModulePath
+        }
+
+        // Check if we've reached root directory
+        const parentDir = path.resolve(startDir, '..')
+        if (parentDir === startDir) {
+            return null
+        }
+
+        // Try the parent directory
+        return findTrpcModule(parentDir, maxDepth - 1)
+    }
+
+    const trpcModulePath = findTrpcModule(srcDir)
+
+    if (!trpcModulePath) {
+        console.log(`[Generator] trpc.module.ts not found in directory tree (searched up from ${srcDir})`)
         return
     }
 
-    console.log(`[Generator] Found app.module.ts at ${appModulePath}`)
-    let content = fs.readFileSync(appModulePath, 'utf-8')
+    console.log(`[Generator] Found trpc.module.ts at ${trpcModulePath}`)
+    let content = fs.readFileSync(trpcModulePath, 'utf-8')
     const moduleName = `${model.name}Module`
-    const importPath = `./trpc/routers/${model.name.toLowerCase()}/${model.name.toLowerCase()}.module`
+    const importPath = `./routers/${model.name.toLowerCase()}/${model.name.toLowerCase()}.module`
 
     // Check if import already exists
     const importRegex = new RegExp(`import\\s*{\\s*${moduleName}\\s*}\\s*from\\s*['"]${importPath}['"]`)
@@ -68,11 +73,11 @@ function updateAppModule(model: DMMF.Model, baseOutputDir: string) {
             console.log(`[Generator] ${moduleName} already in imports array`)
         }
     } else {
-        console.log(`[Generator] Could not find imports array in app.module.ts`)
+        console.log(`[Generator] Could not find imports array in trpc.module.ts`)
     }
 
-    fs.writeFileSync(appModulePath, content)
-    console.log(`[Generator] Updated app.module.ts`)
+    fs.writeFileSync(trpcModulePath, content)
+    console.log(`[Generator] Updated trpc.module.ts`)
 }
 
 export async function generate(options: GeneratorOptions) {
