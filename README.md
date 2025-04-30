@@ -1,30 +1,19 @@
 # @nexica/trpc-gen
 
-A custom Prisma generator for automatically creating NestJS TRPC routers for the Nexica-Stack.
+A custom Prisma generator for automatically creating NestJS TRPC routers for the `@nexica/nestjs-trpc` package.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Overview
 
-`@nexica/trpc-gen` is a Prisma generator that automatically creates NestJS TRPC routers, services, repositories, and modules for each model in your Prisma schema. This tool is specifically designed to work seamlessly with the [Nexica-Stack](https://github.com/link-to-nexica-stack) architecture.
-
-## Nexica-Stack Packages
-
-The Nexica-Stack consists of the following packages:
-
-1. `@nexica/trpc-gen` - Prisma generator for NestJS TRPC routers (this package)
-2. `@nexica/nestjs-trpc` - NestJS integration for tRPC with custom decorators
-3. `@nexica/zod-gen` - Prisma generator for Zod validation schemas
-4. `@nexica/cli` - CLI tool for creating and managing Nexica-Stack projects
-5. `@nexica/client` - Frontend utilities for integrating with Nexica-Stack backends
+`@nexica/trpc-gen` is a Prisma generator that automatically creates NestJS TRPC routers, services, repositories, and modules for each model in your Prisma schema. This tool is specifically designed to work seamlessly with the `@nexica/nestjs-trpc` package.
 
 ## Features
 
-- 🔄 Automatically generates TRPC routers from your Prisma schema
-- 🧩 Creates complete module structure (router, service, repository)
-- 🔌 Integrates generated modules into your NestJS application
-- 🛡️ Includes authentication middleware scaffolding
-- 📝 Utilizes Zod schemas for input/output validation
+- Automatically generates TRPC routers from your Prisma schema
+- Creates complete module structure (router, service, repository)
+- Integrates generated modules into your NestJS application
+- Utilizes Zod schemas for input/output validation
 
 ## Installation
 
@@ -61,7 +50,7 @@ This will generate:
 - A directory for each model
 - Router, Service, and Repository files for each model
 - NestJS modules for each model
-- Automatically updates your `app.module.ts` file with new module imports
+- Automatically updates your `trpc.module.ts` file with new module imports
 
 ## Generated Structure
 
@@ -91,12 +80,6 @@ model User {
 ```
 
 `@nexica/trpc-gen` will generate a full TRPC router with typed endpoints for creating, reading, updating, and deleting User records.
-
-## Integration with Nexica-Stack
-
-This generator is designed to work as part of the [Nexica-Stack](https://github.com/link-to-nexica-stack) ecosystem. It expects a specific project structure and relies on other components from the Nexica-Stack, such as:
-
-- (Todo)
 
 ## Contributing
 
