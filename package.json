@@ -29,9 +29,6 @@
         "format": "prettier --write **/*.{js,ts,json,yml,yaml}",
         "build": "rimraf dist && pnpm lint && pnpm format && tsc --outDir dist"
     },
-    "peerDependencies": {
-        "@nexica/nestjs-trpc": "*"
-    },
     "dependencies": {
         "@prisma/generator-helper": "^6.7.0"
     },
