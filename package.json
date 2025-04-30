@@ -29,6 +29,9 @@
         "format": "prettier --write **/*.{js,ts,json,yml,yaml}",
         "build": "rimraf dist && pnpm lint && pnpm format && tsc --outDir dist"
     },
+    "peerDependencies": {
+        "@nexica/nestjs-trpc": "*"
+    },
     "dependencies": {
         "@prisma/generator-helper": "^6.7.0"
     },
@@ -58,6 +61,28 @@
         "**/*.ts": [
             "prettier --write",
             "eslint --fix"
+        ]
+    },
+    "release": {
+        "branches": [
+            {
+                "name": "dev",
+                "channel": "dev",
+                "prerelease": true
+            },
+            {
+                "name": "rc",
+                "channel": "next",
+                "prerelease": "rc"
+            },
+            "main"
+        ],
+        "plugins": [
+            "@semantic-release/commit-analyzer",
+            "@semantic-release/release-notes-generator",
+            "@semantic-release/changelog",
+            "@semantic-release/npm",
+            "@semantic-release/git"
         ]
     }
 }
