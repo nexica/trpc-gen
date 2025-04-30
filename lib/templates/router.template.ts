@@ -4,9 +4,8 @@ import * as fs from 'fs'
 
 export function generateRouterFile(model: DMMF.Model, outputPath: string) {
     const content = `import { Inject } from '@nestjs/common'
-import { Input, Mutation, Query, Router, UseMiddlewares } from 'nestjs-trpc'
+import { Input, Mutation, Query, Router } from '@nexica/nestjs-trpc'
 import { ${model.name}Service } from './${model.name.toLowerCase()}.service'
-import { AuthMiddleware } from '@/trpc/middleware/auth/auth.middleware'
 import {
     ${model.name}CreateArgsSchema,
     ${model.name}Schema,
@@ -23,7 +22,6 @@ import {
 import { z } from 'zod'
 
 @Router()
-@UseMiddlewares(AuthMiddleware)
 export class ${model.name}Router {
     constructor(
         @Inject(${model.name}Service)

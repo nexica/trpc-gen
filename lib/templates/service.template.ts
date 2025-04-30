@@ -25,19 +25,19 @@ import { z } from 'zod'
 export class ${model.name}Service {
     constructor(private ${model.name.toLowerCase()}Repo: ${model.name}Repo) {}
 
-    async findFirst(data: z.infer<typeof ${model.name}FindFirstArgsSchema>): Promise<${model.name} | null> {
+    async findFirst(data: z.infer<typeof ${model.name}FindFirstArgsSchema>): Promise<${model.name}Schema | null> {
         return this.${model.name.toLowerCase()}Repo.findFirst(data)
     }
 
-    async findMany(data: z.infer<typeof ${model.name}FindManyArgsSchema>): Promise<${model.name}[]> {
+    async findMany(data: z.infer<typeof ${model.name}FindManyArgsSchema>): Promise<${model.name}Schema[]> {
         return this.${model.name.toLowerCase()}Repo.findMany(data)
     }
 
-    async findUnique(data: z.infer<typeof ${model.name}FindUniqueArgsSchema>): Promise<${model.name} | null> {
+    async findUnique(data: z.infer<typeof ${model.name}FindUniqueArgsSchema>): Promise<${model.name}Schema | null> {
         return this.${model.name.toLowerCase()}Repo.findUnique(data)
     }
 
-    async create(data: z.infer<typeof ${model.name}CreateArgsSchema>): Promise<${model.name}> {
+    async create(data: z.infer<typeof ${model.name}CreateArgsSchema>): Promise<${model.name}Schema> {
         return this.${model.name.toLowerCase()}Repo.create(data)
     }
 
@@ -45,7 +45,7 @@ export class ${model.name}Service {
         return this.${model.name.toLowerCase()}Repo.createMany(data)
     }
 
-    async update(data: z.infer<typeof ${model.name}UpdateArgsSchema>): Promise<${model.name}> {
+    async update(data: z.infer<typeof ${model.name}UpdateArgsSchema>): Promise<${model.name}Schema> {
         return this.${model.name.toLowerCase()}Repo.update(data)
     }
 
@@ -53,11 +53,11 @@ export class ${model.name}Service {
         return this.${model.name.toLowerCase()}Repo.updateMany(data)
     }
 
-    async upsert(data: z.infer<typeof ${model.name}UpsertArgsSchema>): Promise<${model.name}> {
+    async upsert(data: z.infer<typeof ${model.name}UpsertArgsSchema>): Promise<${model.name}Schema> {
         return this.${model.name.toLowerCase()}Repo.upsert(data)
     }
 
-    async delete(data: z.infer<typeof ${model.name}DeleteArgsSchema>): Promise<${model.name} | null> {
+    async delete(data: z.infer<typeof ${model.name}DeleteArgsSchema>): Promise<${model.name}Schema | null> {
         return this.${model.name.toLowerCase()}Repo.delete(data)
     }
 
