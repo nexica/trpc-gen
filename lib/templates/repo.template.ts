@@ -37,15 +37,7 @@ export class ${model.name}Repo {
     }
 
     async findUnique(data: z.infer<typeof ${model.name}FindUniqueArgsSchema>) {
-        return data.select
-            ? this.prisma.${model.name.toCamelCase()}.findUnique({
-                  select: { ...data.select },
-                  where: { ...data.where },
-              })
-            : this.prisma.${model.name.toCamelCase()}.findUnique({
-                  include: { ...data.include },
-                  where: { ...data.where },
-              })
+        return this.prisma.${model.name.toCamelCase()}.findUnique(data)
     }
 
     async create(data: z.infer<typeof ${model.name}CreateArgsSchema>) {
