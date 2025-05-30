@@ -1,3 +1,10 @@
+# [1.0.0-dev.7](https://github.com/nexica/trpc-gen/compare/v1.0.0-dev.6...v1.0.0-dev.7) (2025-05-30)
+
+
+### Bug Fixes
+
+* removed extra commas ([576d81f](https://github.com/nexica/trpc-gen/commit/576d81fd5d7cf3cb8c7413f44a36276102e9907a))
+
 # [1.0.0-dev.6](https://github.com/nexica/trpc-gen/compare/v1.0.0-dev.5...v1.0.0-dev.6) (2025-05-30)
 
 
