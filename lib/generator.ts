@@ -74,13 +74,18 @@ function updateAppModule(model: DMMF.Model, baseOutputDir: string) {
                 const beforeTrpc = currentImports.slice(0, trpcModuleIndex).trim()
                 const afterTrpc = currentImports.slice(trpcModuleIndex).trim()
 
-                // Construct new imports string
-                const newImports = beforeTrpc ? `${beforeTrpc}, ${moduleName}, ${afterTrpc}` : `${moduleName}, ${afterTrpc}`
+                // Clean up commas and construct new imports string
+                const cleanBeforeTrpc = beforeTrpc.replace(/,\s*,/g, ',').replace(/,\s*$/, '')
+                const cleanAfterTrpc = afterTrpc.replace(/^\s*,/, '')
+
+                // Construct new imports string with proper comma handling
+                const newImports = cleanBeforeTrpc ? `${cleanBeforeTrpc}, ${moduleName}, ${cleanAfterTrpc}` : `${moduleName}, ${cleanAfterTrpc}`
 
                 content = content.replace(moduleDecoratorRegex, (match) => match.replace(/imports:\s*\[([\s\S]*?)\]/, `imports: [${newImports}]`))
             } else {
                 // If no TRPCModule.forRoot found, append to end
-                const newImports = currentImports ? `${currentImports.trim()}, ${moduleName}` : moduleName
+                const cleanImports = currentImports.replace(/,\s*,/g, ',').replace(/,\s*$/, '')
+                const newImports = cleanImports ? `${cleanImports}, ${moduleName}` : moduleName
                 content = content.replace(moduleDecoratorRegex, (match) => match.replace(/imports:\s*\[([\s\S]*?)\]/, `imports: [${newImports}]`))
             }
         } else {
