@@ -1,3 +1,15 @@
+# [1.0.0-dev.3](https://github.com/nexica/trpc-gen/compare/v1.0.0-dev.2...v1.0.0-dev.3) (2025-05-30)
+
+
+### Bug Fixes
+
+* update service template ([9d83d8e](https://github.com/nexica/trpc-gen/commit/9d83d8e942d54d08975f5420031feec6a7efcc11))
+
+
+### Features
+
+* added zod path and prisma path options ([9dea7fa](https://github.com/nexica/trpc-gen/commit/9dea7fa88b89623a35242a19f02f4c204de6b9ef))
+
 # [1.0.0-dev.2](https://github.com/nexica/trpc-gen/compare/v1.0.0-dev.1...v1.0.0-dev.2) (2025-05-01)
 
 
