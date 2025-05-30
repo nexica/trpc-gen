@@ -1,3 +1,10 @@
+# [1.0.0-dev.4](https://github.com/nexica/trpc-gen/compare/v1.0.0-dev.3...v1.0.0-dev.4) (2025-05-30)
+
+
+### Bug Fixes
+
+* updated templates ([16a21f5](https://github.com/nexica/trpc-gen/commit/16a21f5f96c18bba8addd085e24bf94f12bb2152))
+
 # [1.0.0-dev.3](https://github.com/nexica/trpc-gen/compare/v1.0.0-dev.2...v1.0.0-dev.3) (2025-05-30)
 
 
