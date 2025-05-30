@@ -1,3 +1,10 @@
+# [1.0.0-dev.6](https://github.com/nexica/trpc-gen/compare/v1.0.0-dev.5...v1.0.0-dev.6) (2025-05-30)
+
+
+### Bug Fixes
+
+* updated new module placement in trpc module file ([0a5402c](https://github.com/nexica/trpc-gen/commit/0a5402c855141fd17ffb37c7c24319d46b124d6a))
+
 # [1.0.0-dev.5](https://github.com/nexica/trpc-gen/compare/v1.0.0-dev.4...v1.0.0-dev.5) (2025-05-30)
 
 
