@@ -2,7 +2,12 @@ import { DMMF } from '@prisma/generator-helper'
 import * as path from 'path'
 import * as fs from 'fs'
 
-export function generateRouterFile(model: DMMF.Model, outputPath: string) {
+interface TemplateOptions {
+    zodPath: string
+}
+
+export function generateRouterFile(model: DMMF.Model, outputPath: string, options: TemplateOptions) {
+    const { zodPath } = options
     const content = `import { Inject } from '@nestjs/common'
 import { Input, Mutation, Query, Router } from '@nexica/nestjs-trpc'
 import { ${model.name}Service } from './${model.name.toLowerCase()}.service'
@@ -18,7 +23,7 @@ import {
     ${model.name}UpdateManyArgsSchema,
     ${model.name}DeleteManyArgsSchema,
     ${model.name}UpsertArgsSchema,
-} from '@/zod'
+} from '${zodPath}'
 import { z } from 'zod'
 
 @Router()
@@ -107,7 +112,6 @@ export class ${model.name}Router {
     async deleteMany(@Input() input: z.infer<typeof ${model.name}DeleteManyArgsSchema>) {
         return await this.${model.name.toLowerCase()}Service.deleteMany(input)
     }
-
 }`
 
     const filePath = path.join(outputPath, `${model.name.toLowerCase()}.router.ts`)

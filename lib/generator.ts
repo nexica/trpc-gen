@@ -83,6 +83,8 @@ function updateAppModule(model: DMMF.Model, baseOutputDir: string) {
 export async function generate(options: GeneratorOptions) {
     const { generator, dmmf } = options
     const baseOutputDir = generator.output?.value ?? 'src/modules'
+    const prismaPath = (generator.config.prismaPath as string) ?? '@prisma/client'
+    const zodPath = (generator.config.zodPath as string) ?? '@/zod'
 
     // Create modules directory if it doesn't exist
     if (!fs.existsSync(baseOutputDir)) {
@@ -98,9 +100,9 @@ export async function generate(options: GeneratorOptions) {
             fs.mkdirSync(modelOutputPath, { recursive: true })
         }
 
-        generateRouterFile(model, modelOutputPath)
-        generateServiceFile(model, modelOutputPath)
-        generateRepoFile(model, modelOutputPath)
+        generateRouterFile(model, modelOutputPath, { zodPath })
+        generateServiceFile(model, modelOutputPath, { prismaPath, zodPath })
+        generateRepoFile(model, modelOutputPath, { zodPath })
         generateModuleFile(model, modelOutputPath)
         updateAppModule(model, baseOutputDir)
     }

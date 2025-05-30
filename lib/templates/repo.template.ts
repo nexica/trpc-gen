@@ -2,7 +2,12 @@ import { DMMF } from '@prisma/generator-helper'
 import * as path from 'path'
 import * as fs from 'fs'
 
-export function generateRepoFile(model: DMMF.Model, outputPath: string) {
+interface TemplateOptions {
+    zodPath: string
+}
+
+export function generateRepoFile(model: DMMF.Model, outputPath: string, options: TemplateOptions) {
+    const { zodPath } = options
     const content = `import { Injectable } from '@nestjs/common'
 import { PrismaService } from '@/prisma/prisma.service'
 import {
@@ -16,7 +21,7 @@ import {
     ${model.name}UpdateManyArgsSchema,
     ${model.name}DeleteManyArgsSchema,
     ${model.name}UpsertArgsSchema,
-} from '@/zod'
+} from '${zodPath}'
 import { z } from 'zod'
 
 @Injectable()
