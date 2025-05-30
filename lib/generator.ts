@@ -66,9 +66,23 @@ function updateAppModule(model: DMMF.Model, baseOutputDir: string) {
         const currentImports = moduleMatch[1]
         if (!currentImports.includes(moduleName)) {
             console.log(`[Generator] Adding ${moduleName} to imports array`)
-            // Add module to imports array
-            const newImports = currentImports ? `${currentImports.trim()}, ${moduleName}` : moduleName
-            content = content.replace(moduleDecoratorRegex, (match) => match.replace(/imports:\s*\[([\s\S]*?)\]/, `imports: [${newImports}]`))
+
+            // Split imports at TRPCModule.forRoot
+            const trpcModuleIndex = currentImports.indexOf('TRPCModule.forRoot')
+            if (trpcModuleIndex !== -1) {
+                // Insert new module before TRPCModule.forRoot
+                const beforeTrpc = currentImports.slice(0, trpcModuleIndex).trim()
+                const afterTrpc = currentImports.slice(trpcModuleIndex).trim()
+
+                // Construct new imports string
+                const newImports = beforeTrpc ? `${beforeTrpc}, ${moduleName}, ${afterTrpc}` : `${moduleName}, ${afterTrpc}`
+
+                content = content.replace(moduleDecoratorRegex, (match) => match.replace(/imports:\s*\[([\s\S]*?)\]/, `imports: [${newImports}]`))
+            } else {
+                // If no TRPCModule.forRoot found, append to end
+                const newImports = currentImports ? `${currentImports.trim()}, ${moduleName}` : moduleName
+                content = content.replace(moduleDecoratorRegex, (match) => match.replace(/imports:\s*\[([\s\S]*?)\]/, `imports: [${newImports}]`))
+            }
         } else {
             console.log(`[Generator] ${moduleName} already in imports array`)
         }
