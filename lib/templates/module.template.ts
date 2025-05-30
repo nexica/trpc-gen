@@ -7,8 +7,10 @@ export function generateModuleFile(model: DMMF.Model, outputPath: string) {
 import { ${model.name}Router } from './${model.name.toLowerCase()}.router'
 import { ${model.name}Service } from './${model.name.toLowerCase()}.service'
 import { ${model.name}Repo } from './${model.name.toLowerCase()}.repo'
+import { PrismaModule } from '@/prisma/prisma.module'
 
 @Module({
+    imports: [PrismaModule],
     providers: [${model.name}Router, ${model.name}Service, ${model.name}Repo],
 })
 export class ${model.name}Module {}`
