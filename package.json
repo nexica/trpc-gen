@@ -35,7 +35,7 @@
         "build": "rimraf dist && pnpm lint && pnpm format && tsc --outDir dist"
     },
     "dependencies": {
-        "@prisma/generator-helper": "^6.8.2"
+        "@prisma/generator-helper": "^6.9.0"
     },
     "devDependencies": {
         "@commitlint/cli": "^19.8.1",
@@ -46,7 +46,7 @@
         "@semantic-release/git": "^10.0.1",
         "@semantic-release/npm": "^12.0.1",
         "@semantic-release/release-notes-generator": "^14.0.3",
-        "@types/node": "^22.15.29",
+        "@types/node": "^22.15.31",
         "eslint": "^9.28.0",
         "eslint-config-prettier": "^10.1.5",
         "eslint-plugin-prettier": "^5.4.1",
@@ -57,7 +57,7 @@
         "rimraf": "^6.0.1",
         "semantic-release": "^24.2.5",
         "typescript": "^5.8.3",
-        "typescript-eslint": "^8.33.0"
+        "typescript-eslint": "^8.34.0"
     },
     "lint-staged": {
         "**/*.ts": [

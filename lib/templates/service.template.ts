@@ -25,7 +25,7 @@ import {
     ${model.name}DeleteManyArgsSchema,
     ${model.name}UpsertArgsSchema,
 } from '${zodPath}'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 @Injectable()
 export class ${model.name}Service {
