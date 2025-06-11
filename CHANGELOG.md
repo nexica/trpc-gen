@@ -1,3 +1,10 @@
+# [1.0.0-dev.8](https://github.com/nexica/trpc-gen/compare/v1.0.0-dev.7...v1.0.0-dev.8) (2025-06-11)
+
+
+### Features
+
+* update to zod v4 ([80dc5e0](https://github.com/nexica/trpc-gen/commit/80dc5e05df9d4cad133e74520bd7a7a6184346c3))
+
 # [1.0.0-dev.7](https://github.com/nexica/trpc-gen/compare/v1.0.0-dev.6...v1.0.0-dev.7) (2025-05-30)
 
 
