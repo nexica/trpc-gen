@@ -12,6 +12,7 @@ import { PrismaModule } from '@/prisma/prisma.module'
 @Module({
     imports: [PrismaModule],
     providers: [${model.name}Router, ${model.name}Service, ${model.name}Repo],
+    exports: [${model.name}Service, ${model.name}Repo],
 })
 export class ${model.name}Module {}`
 

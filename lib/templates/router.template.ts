@@ -8,12 +8,13 @@ interface TemplateOptions {
 
 export function generateRouterFile(model: DMMF.Model, outputPath: string, options: TemplateOptions) {
     const { zodPath } = options
+    const mainSchemaName = `${model.name}${model.fields.some((field) => field.relationName) ? `WithPartialRelationsSchema` : `Schema`}`
     const content = `import { Inject } from '@nestjs/common'
 import { Input, Mutation, Query, Router } from '@nexica/nestjs-trpc'
 import { ${model.name}Service } from './${model.name.toLowerCase()}.service'
 import {
+    ${mainSchemaName},
     ${model.name}CreateArgsSchema,
-    ${model.name}Schema,
     ${model.name}FindManyArgsSchema,
     ${model.name}FindUniqueArgsSchema,
     ${model.name}UpdateArgsSchema,
@@ -35,7 +36,7 @@ export class ${model.name}Router {
 
     @Query({
         input: ${model.name}FindFirstArgsSchema,
-        output: ${model.name}Schema.nullable(),
+        output: ${mainSchemaName}.nullable(),
     })
     async findFirst(@Input() input: z.infer<typeof ${model.name}FindFirstArgsSchema>) {
         return await this.${model.name.toLowerCase()}Service.findFirst(input)
@@ -43,7 +44,7 @@ export class ${model.name}Router {
 
     @Query({
         input: ${model.name}FindManyArgsSchema,
-        output: z.array(${model.name}Schema),
+        output: z.array(${mainSchemaName}),
     })
     async findMany(@Input() input: z.infer<typeof ${model.name}FindManyArgsSchema>) {
         return await this.${model.name.toLowerCase()}Service.findMany(input)
@@ -51,7 +52,7 @@ export class ${model.name}Router {
 
     @Query({
         input: ${model.name}FindUniqueArgsSchema,
-        output: ${model.name}Schema.nullable(),
+        output: ${mainSchemaName}.nullable(),
     })
     async findUnique(@Input() input: z.infer<typeof ${model.name}FindUniqueArgsSchema>) {
         return await this.${model.name.toLowerCase()}Service.findUnique(input)
@@ -59,7 +60,7 @@ export class ${model.name}Router {
 
     @Mutation({
         input: ${model.name}CreateArgsSchema,
-        output: ${model.name}Schema,
+        output: ${mainSchemaName},
     })
     async create(@Input() input: z.infer<typeof ${model.name}CreateArgsSchema>) {
         return await this.${model.name.toLowerCase()}Service.create(input)
@@ -67,7 +68,6 @@ export class ${model.name}Router {
 
     @Mutation({
         input: ${model.name}CreateManyArgsSchema,
-        output: z.object({ count: z.number() }),
     })
     async createMany(@Input() input: z.infer<typeof ${model.name}CreateManyArgsSchema>) {
         return await this.${model.name.toLowerCase()}Service.createMany(input)
@@ -75,7 +75,7 @@ export class ${model.name}Router {
 
     @Mutation({
         input: ${model.name}UpdateArgsSchema,
-        output: ${model.name}Schema,
+        output: ${mainSchemaName},
     })
     async update(@Input() input: z.infer<typeof ${model.name}UpdateArgsSchema>) {
         return await this.${model.name.toLowerCase()}Service.update(input)
@@ -83,7 +83,6 @@ export class ${model.name}Router {
 
     @Mutation({
         input: ${model.name}UpdateManyArgsSchema,
-        output: z.object({ count: z.number() }),
     })
     async updateMany(@Input() input: z.infer<typeof ${model.name}UpdateManyArgsSchema>) {
         return await this.${model.name.toLowerCase()}Service.updateMany(input)
@@ -91,7 +90,7 @@ export class ${model.name}Router {
 
     @Mutation({
         input: ${model.name}UpsertArgsSchema,
-        output: ${model.name}Schema,
+        output: ${mainSchemaName},
     })
     async upsert(@Input() input: z.infer<typeof ${model.name}UpsertArgsSchema>) {
         return await this.${model.name.toLowerCase()}Service.upsert(input)
@@ -99,7 +98,7 @@ export class ${model.name}Router {
 
     @Mutation({
         input: ${model.name}DeleteArgsSchema,
-        output: ${model.name}Schema.nullable(),
+        output: ${mainSchemaName},
     })
     async delete(@Input() input: z.infer<typeof ${model.name}DeleteArgsSchema>) {
         return await this.${model.name.toLowerCase()}Service.delete(input)
@@ -107,7 +106,6 @@ export class ${model.name}Router {
 
     @Mutation({
         input: ${model.name}DeleteManyArgsSchema,
-        output: z.object({ count: z.number() }),
     })
     async deleteMany(@Input() input: z.infer<typeof ${model.name}DeleteManyArgsSchema>) {
         return await this.${model.name.toLowerCase()}Service.deleteMany(input)
