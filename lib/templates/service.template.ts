@@ -11,6 +11,7 @@ export function generateServiceFile(model: DMMF.Model, outputPath: string, optio
     const mainSchemaName = `${model.name}${model.fields.some((field) => field.relationName) ? `WithPartialRelationsSchema` : `Schema`}`
     const content = `import { Injectable } from '@nestjs/common'
 import { ${model.name}Repo } from './${model.name.toLowerCase()}.repo'
+import { EventEmitter } from 'events'
 import {
     ${mainSchemaName},
     ${model.name}CreateArgsSchema,
@@ -28,7 +29,19 @@ import { z } from 'zod/v4'
 
 @Injectable()
 export class ${model.name}Service {
-    constructor(private ${model.name.toLowerCase()}Repo: ${model.name}Repo) {}
+    private readonly eventEmitter = new EventEmitter()
+
+    constructor(private ${model.name.toLowerCase()}Repo: ${model.name}Repo) {
+        this.eventEmitter.setMaxListeners(100)
+    }
+
+    onModuleDestroy() {
+        this.eventEmitter.removeAllListeners()
+    }
+
+    getEventEmitter(): EventEmitter {
+        return this.eventEmitter
+    }
 
     async findFirst(data: z.infer<typeof ${model.name}FindFirstArgsSchema>): Promise<z.infer<typeof ${mainSchemaName}> | null> {
         return await this.${model.name.toLowerCase()}Repo.findFirst(data)
@@ -43,7 +56,9 @@ export class ${model.name}Service {
     }
 
     async create(data: z.infer<typeof ${model.name}CreateArgsSchema>): Promise<z.infer<typeof ${mainSchemaName}>> {
-        return await this.${model.name.toLowerCase()}Repo.create(data)
+        const activity = await this.${model.name.toLowerCase()}Repo.create(data)
+        this.eventEmitter.emit('${model.name.toLowerCase()}.created', activity)
+        return activity
     }
 
     async createMany(data: z.infer<typeof ${model.name}CreateManyArgsSchema>): Promise<void> {
@@ -51,7 +66,9 @@ export class ${model.name}Service {
     }
 
     async update(data: z.infer<typeof ${model.name}UpdateArgsSchema>): Promise<z.infer<typeof ${mainSchemaName}>> {
-        return await this.${model.name.toLowerCase()}Repo.update(data)
+        const activity = await this.${model.name.toLowerCase()}Repo.update(data)
+        this.eventEmitter.emit('${model.name.toLowerCase()}.updated', activity)
+        return activity
     }
 
     async updateMany(data: z.infer<typeof ${model.name}UpdateManyArgsSchema>): Promise<void> {
@@ -59,11 +76,15 @@ export class ${model.name}Service {
     }
 
     async upsert(data: z.infer<typeof ${model.name}UpsertArgsSchema>): Promise<z.infer<typeof ${mainSchemaName}>> {
-        return await this.${model.name.toLowerCase()}Repo.upsert(data)
+        const activity = await this.${model.name.toLowerCase()}Repo.upsert(data)
+        this.eventEmitter.emit('${model.name.toLowerCase()}.upserted', activity)
+        return activity
     }
 
     async delete(data: z.infer<typeof ${model.name}DeleteArgsSchema>): Promise<z.infer<typeof ${mainSchemaName}>> {
-        return await this.${model.name.toLowerCase()}Repo.delete(data)
+        const activity = await this.${model.name.toLowerCase()}Repo.delete(data)
+        this.eventEmitter.emit('${model.name.toLowerCase()}.deleted', activity)
+        return activity
     }
 
     async deleteMany(data: z.infer<typeof ${model.name}DeleteManyArgsSchema>): Promise<void> {

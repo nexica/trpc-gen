@@ -10,7 +10,7 @@ export function generateRouterFile(model: DMMF.Model, outputPath: string, option
     const { zodPath } = options
     const mainSchemaName = `${model.name}${model.fields.some((field) => field.relationName) ? `WithPartialRelationsSchema` : `Schema`}`
     const content = `import { Inject } from '@nestjs/common'
-import { Input, Mutation, Query, Router } from '@nexica/nestjs-trpc'
+import { Input, Mutation, Query, Router, Subscription, createEventSubscription } from '@nexica/nestjs-trpc'
 import { ${model.name}Service } from './${model.name.toLowerCase()}.service'
 import {
     ${mainSchemaName},
@@ -109,6 +109,62 @@ export class ${model.name}Router {
     })
     async deleteMany(@Input() input: z.infer<typeof ${model.name}DeleteManyArgsSchema>) {
         return await this.${model.name.toLowerCase()}Service.deleteMany(input)
+    }
+
+    @Subscription({
+        output: ${mainSchemaName},
+    })
+    async *on${model.name}Created(): AsyncIterable<z.infer<typeof ${mainSchemaName}>> {
+        const { subscription } = createEventSubscription<z.infer<typeof ${mainSchemaName}>>({
+            eventEmitter: this.${model.name.toLowerCase()}Service.getEventEmitter(),
+            eventName: '${model.name.toLowerCase()}.created',
+            maxQueueSize: 100,
+            resilientMode: true,
+        })
+
+        yield* subscription
+    }
+
+    @Subscription({
+        output: ${mainSchemaName},
+    })
+    async *on${model.name}Updated(): AsyncIterable<z.infer<typeof ${mainSchemaName}>> {
+        const { subscription } = createEventSubscription<z.infer<typeof ${mainSchemaName}>>({
+            eventEmitter: this.${model.name.toLowerCase()}Service.getEventEmitter(),
+            eventName: '${model.name.toLowerCase()}.updated',
+            maxQueueSize: 100,
+            resilientMode: true,
+        })
+
+        yield* subscription
+    }
+
+    @Subscription({
+        output: ${mainSchemaName},
+    })
+    async *on${model.name}Upserted(): AsyncIterable<z.infer<typeof ${mainSchemaName}>> {
+        const { subscription } = createEventSubscription<z.infer<typeof ${mainSchemaName}>>({
+            eventEmitter: this.${model.name.toLowerCase()}Service.getEventEmitter(),
+            eventName: '${model.name.toLowerCase()}.upserted',
+            maxQueueSize: 100,
+            resilientMode: true,
+        })
+
+        yield* subscription
+    }
+
+    @Subscription({
+        output: ${mainSchemaName},
+    })
+    async *on${model.name}Deleted(): AsyncIterable<z.infer<typeof ${mainSchemaName}>> {
+        const { subscription } = createEventSubscription<z.infer<typeof ${mainSchemaName}>>({
+            eventEmitter: this.${model.name.toLowerCase()}Service.getEventEmitter(),
+            eventName: '${model.name.toLowerCase()}.deleted',
+            maxQueueSize: 100,
+            resilientMode: true,
+        })
+
+        yield* subscription
     }
 }`
 
